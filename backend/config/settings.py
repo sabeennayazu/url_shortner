@@ -27,16 +27,26 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'localhost:3000', 'localhost:8000']
 
+# Short URL Domain - displayed in shortened URLs (for production/demo)
+SHORT_URL_DOMAIN = 'http://127.0.0.1:8000'
+
+# Backend API URL - actual server running this Django app
+BACKEND_API_URL = 'http://localhost:8000'
+
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Your React app
     "http://localhost:5173",  # If using Vite
+    "http://martis.com",
+    "https://martis.com",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:5173",
+    "http://martis.com",
+    "https://martis.com",
 ]
 
 CSRF_COOKIE_SAMESITE = 'Lax'

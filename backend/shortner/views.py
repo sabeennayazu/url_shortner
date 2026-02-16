@@ -1,6 +1,7 @@
 import json
 import logging
 
+from django.conf import settings
 from django.shortcuts import redirect
 from django.http import JsonResponse
 from django.views.decorators.http import require_http_methods
@@ -83,7 +84,7 @@ def create_short_url(request):
         # Check existing URL
         existing_url = Url.objects.filter(original_url=validated_url).first()
         if existing_url:
-            short_url = request.build_absolute_uri(f"/s/{existing_url.short_code}")
+            short_url = f"{settings.SHORT_URL_DOMAIN}/s/{existing_url.short_code}"
             return JsonResponse({
                 "id": existing_url.id,
                 "short_code": existing_url.short_code,
@@ -99,7 +100,7 @@ def create_short_url(request):
             url_obj.short_code = encode_base62(url_obj.id)
             url_obj.save(update_fields=["short_code"])
 
-        short_url = request.build_absolute_uri(f"/s/{url_obj.short_code}")
+        short_url = f"{settings.SHORT_URL_DOMAIN}/s/{url_obj.short_code}"
         return JsonResponse({
             "id": url_obj.id,
             "short_code": url_obj.short_code,
@@ -150,7 +151,7 @@ def get_user_urls(request):
             urls_list.append({
                 "id": url["id"],
                 "short_code": url["short_code"],
-                "short_url": request.build_absolute_uri(f"/s/{url['short_code']}"),
+                "short_url": f"{settings.SHORT_URL_DOMAIN}/s/{url['short_code']}",
                 "original_url": url["original_url"],
                 "created_at": url["created_at"].isoformat(),
                 "clicks": url.get("clicks_count", 0)
@@ -184,7 +185,7 @@ def get_url_analytics(request, url_id):
         return JsonResponse({
             "id": url_obj.id,
             "short_code": url_obj.short_code,
-            "short_url": request.build_absolute_uri(f"/s/{url_obj.short_code}"),
+            "short_url": f"{settings.SHORT_URL_DOMAIN}/s/{url_obj.short_code}",
             "original_url": url_obj.original_url,
             "total_clicks": len(clicks_list),
             "created_at": url_obj.created_at.isoformat(),

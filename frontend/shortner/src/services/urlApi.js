@@ -1,4 +1,5 @@
 // API service for URL shortener
+// Use localhost for local development, martis.com will be the shortened URL domain
 const API_URL = 'http://localhost:8000/api';
 
 // Get CSRF token from cookie
