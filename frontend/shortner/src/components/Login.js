@@ -33,13 +33,15 @@ export function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-600 to-purple-800 flex items-center justify-center px-4">
-      <div className="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">Login</h1>
+    <div className="min-h-screen bg-white flex items-center justify-center px-4 py-8">
+      <div className="bg-white/80 backdrop-blur-lg rounded-2xl shadow-2xl p-6 sm:p-8 w-full max-w-md border border-white/30">
+        <h1 className="text-2xl sm:text-3xl font-bold text-center text-gray-800 mb-2">Login</h1>
+        <p className="text-center text-gray-600 text-sm mb-6">Welcome back!</p>
         
         {error && (
-          <div className="mb-6 p-3 bg-red-100 border-l-4 border-red-500 text-red-700 text-sm rounded">
-            {error}
+          <div className="mb-6 p-4 bg-red-50/80 backdrop-blur-md border border-red-200 text-red-700 text-sm rounded-lg">
+            <p className="font-semibold mb-1">Login Error</p>
+            <p>{error}</p>
           </div>
         )}
         
@@ -55,7 +57,8 @@ export function Login() {
               onChange={(e) => setUsername(e.target.value)}
               required
               disabled={loading}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+              placeholder="Enter your username"
+              className="w-full px-4 py-3 border border-white/30 bg-white/60 backdrop-blur-md rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-800 placeholder-gray-500"
             />
           </div>
           
@@ -70,20 +73,21 @@ export function Login() {
               onChange={(e) => setPassword(e.target.value)}
               required
               disabled={loading}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-600 disabled:bg-gray-100 disabled:cursor-not-allowed"
+              placeholder="Enter your password"
+              className="w-full px-4 py-3 border border-white/30 bg-white/60 backdrop-blur-md rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed text-gray-800 placeholder-gray-500"
             />
           </div>
           
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2 px-4 bg-gradient-to-r from-purple-600 to-purple-700 text-white font-semibold rounded-lg hover:from-purple-700 hover:to-purple-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+            className="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold rounded-lg hover:from-purple-700 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-[1.02]"
           >
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
         
-        <p className="text-center text-gray-600 text-sm mt-6">
+        <p className="text-center text-gray-600 text-xs sm:text-sm mt-6">
           Don't have an account?{' '}
           <Link to="/signup" className="text-purple-600 font-semibold hover:text-purple-700">
             Sign Up

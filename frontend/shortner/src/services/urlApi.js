@@ -85,4 +85,14 @@ export const urlApi = {
       method: 'DELETE',
     });
   },
+
+  /**
+   * Get user's URL history
+   * @returns {Promise<Object>} Object containing urls array with short_url and clicks
+   */
+  getHistory: async () => {
+    return fetchWithAuth(`${API_URL}/urls/`, {
+      method: 'GET',
+    });
+  },
 };

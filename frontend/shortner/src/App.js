@@ -9,9 +9,10 @@ import './App.css';
 
 function App() {
   return (
-    <Router>
-      <AuthProvider>
-        <Routes>
+    <div className="min-h-screen bg-white">
+      <Router>
+        <AuthProvider>
+          <Routes>
           <Route
             path="/login"
             element={
@@ -38,8 +39,9 @@ function App() {
           />
           <Route path="/" element={<Navigate to="/home" replace />} />
         </Routes>
-      </AuthProvider>
-    </Router>
+        </AuthProvider>
+      </Router>
+    </div>
   );
 }
 
