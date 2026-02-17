@@ -1,6 +1,20 @@
-// API service for URL shortener
-// Use localhost for local development, martis.com will be the shortened URL domain
-const API_URL = 'http://localhost:8000/api';
+/**
+ * API service for URL shortener
+ * Handles all API calls for URL management, analytics, and history
+ * 
+ * Configuration:
+ * - Uses environment variable REACT_APP_API_BASE_URL (defaults to localhost:8000)
+ * - Works with session-based authentication
+ * - Includes CSRF token protection
+ */
+
+// Get API base URL from environment variables
+const getApiBaseUrl = () => {
+  return process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000';
+};
+
+const API_BASE_URL = getApiBaseUrl();
+const API_URL = `${API_BASE_URL}/api`;
 
 // Get CSRF token from cookie
 const getCsrfToken = () => {
@@ -20,11 +34,12 @@ const getCsrfToken = () => {
 };
 
 // Fetch helper with authentication
+// Includes CSRF protection and proper error handling
 const fetchWithAuth = async (url, options = {}) => {
   const csrfToken = getCsrfToken();
 
   const response = await fetch(url, {
-    credentials: 'include',
+    credentials: 'include', // Include cookies for session auth
     headers: {
       'Content-Type': 'application/json',
       ...(csrfToken && { 'X-CSRFToken': csrfToken }),
@@ -34,8 +49,14 @@ const fetchWithAuth = async (url, options = {}) => {
   });
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({}));
-    throw new Error(error.error || `HTTP error! status: ${response.status}`);
+    let error;
+    try {
+      const data = await response.json();
+      error = data.error || data.detail || `HTTP error! status: ${response.status}`;
+    } catch {
+      error = `HTTP error! status: ${response.status}`;
+    }
+    throw new Error(error);
   }
 
   return response.json();

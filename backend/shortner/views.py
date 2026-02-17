@@ -64,8 +64,8 @@ def get_client_ip(request):
 # -------------------------
 # Create short URL
 # -------------------------
-@csrf_exempt  # remove in production if using CSRF properly
 @require_http_methods(["POST"])
+@login_required
 def create_short_url(request):
     try:
         data = json.loads(request.body.decode("utf-8"))
@@ -81,8 +81,8 @@ def create_short_url(request):
         return JsonResponse({"error": "Invalid URL format"}, status=400)
 
     try:
-        # Check existing URL
-        existing_url = Url.objects.filter(original_url=validated_url).first()
+        # Check existing URL for this user
+        existing_url = Url.objects.filter(user=request.user, original_url=validated_url).first()
         if existing_url:
             short_url = f"{settings.SHORT_URL_DOMAIN}/s/{existing_url.short_code}"
             return JsonResponse({
@@ -94,9 +94,9 @@ def create_short_url(request):
                 "message": "URL already shortened"
             }, status=200)
 
-        # Create new URL atomically
+        # Create new URL atomically, associated with the logged-in user
         with transaction.atomic():
-            url_obj = Url.objects.create(original_url=validated_url, short_code="temp")
+            url_obj = Url.objects.create(user=request.user, original_url=validated_url, short_code="temp")
             url_obj.short_code = encode_base62(url_obj.id)
             url_obj.save(update_fields=["short_code"])
 
@@ -142,7 +142,7 @@ def redirect_short_url(request, short_code):
 @login_required
 def get_user_urls(request):
     try:
-        urls = Url.objects.all().values(
+        urls = Url.objects.filter(user=request.user).values(
             "id", "original_url", "short_code", "created_at"
         ).annotate(clicks_count=Count("clicks")).order_by("-created_at")
 
@@ -169,7 +169,7 @@ def get_user_urls(request):
 @login_required
 def get_url_analytics(request, url_id):
     try:
-        url_obj = Url.objects.get(id=url_id)
+        url_obj = Url.objects.get(id=url_id, user=request.user)
         clicks = Click.objects.filter(url=url_obj).values(
             "clicked_at", "ip_address", "user_agent"
         ).order_by("-clicked_at")
@@ -204,7 +204,7 @@ def get_url_analytics(request, url_id):
 @login_required
 def delete_url(request, url_id):
     try:
-        url_obj = Url.objects.get(id=url_id)
+        url_obj = Url.objects.get(id=url_id, user=request.user)
         short_code = url_obj.short_code
         url_obj.delete()
         return JsonResponse({"message": f"URL {short_code} deleted successfully"}, status=200)

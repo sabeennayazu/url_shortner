@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: url-shortener-api
+    runtime: python
+    buildCommand: pip install -r backend/requirements.txt && cd backend && python manage.py collectstatic --noinput && python manage.py migrate
+    startCommand: cd backend && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
+    envVars:
+      - key: SECRET_KEY
+        value: ""  # Set this in Render dashboard
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: "yourdomain.com,api.yourdomain.com,yourdomain-api.onrender.com"
+      - key: SECURE_SSL_REDIRECT
+        value: "True"
+      - key: SESSION_COOKIE_SECURE
+        value: "True"
+      - key: CSRF_COOKIE_SECURE
+        value: "True"
+      - key: CORS_ALLOWED_ORIGINS
+        value: "https://yourdomain.com,https://www.yourdomain.com,https://yourdomain.vercel.app"
+      - key: CSRF_TRUSTED_ORIGINS
+        value: "https://yourdomain.com,https://www.yourdomain.com,https://yourdomain.vercel.app"
+      - key: SHORT_URL_DOMAIN
+        value: "https://yourdomain.com"
+
+  - type: pserv
+    name: url-shortener-db
+    ipWhitelist: []
+    plan: free
+
+databases:
+  - name: url_shortener_db
+    databaseName: urlshortener
+    user: urlshortener_user

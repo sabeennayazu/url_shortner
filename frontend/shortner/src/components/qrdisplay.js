@@ -6,7 +6,7 @@ export function QRDisplay({ shortUrl }) {
     <div className="flex flex-col items-center justify-center ">
       <h2 className="text-2xl font-bold mb-4">Your QR Code</h2>
       <div className="bg-white p-4 rounded-lg shadow-lg">
-        <QRCode value={shortUrl} size={256} />
+        <QRCode id="qr-code-svg" value={shortUrl} size={256} />
       </div>
     </div>
   );
