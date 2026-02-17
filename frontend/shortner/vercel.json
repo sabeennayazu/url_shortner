@@ -5,6 +5,10 @@
   "framework": "create-react-app",
   "rewrites": [
     {
+      "source": "/s/:match*",
+      "destination": "https://url-shortner-backend-cqgw.onrender.com/s/:match*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
