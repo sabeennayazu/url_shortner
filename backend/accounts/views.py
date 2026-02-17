@@ -31,7 +31,7 @@ def get_current_user(request):
     return JsonResponse({'user': None})
 
 
-@csrf_protect
+@csrf_exempt  # Allow registration without CSRF for cross-domain initial signup
 @require_http_methods(["POST"])
 def user_register(request):
     """Register new user"""
@@ -95,7 +95,7 @@ def user_register(request):
         return JsonResponse({'error': 'Registration failed'}, status=500)
 
 
-@csrf_protect
+@csrf_exempt
 @require_http_methods(["POST"])
 def user_login(request):
     """Login user"""
