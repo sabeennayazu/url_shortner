@@ -8,8 +8,6 @@ import {
   FiLogOut,
   FiClock,
   FiLink2,
-  FiCopy,
-  FiDownload,
   FiCheck,
 } from 'react-icons/fi';
 
