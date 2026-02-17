@@ -61,6 +61,9 @@ SESSION_COOKIE_SAMESITE = os.getenv('SESSION_COOKIE_SAMESITE', 'Lax')
 CSRF_COOKIE_SAMESITE = os.getenv('CSRF_COOKIE_SAMESITE', 'Lax')
 CSRF_COOKIE_HTTPONLY = False  # Allow JS to read CSRF cookie for protection
 
+# Alternative: Store CSRF token in session instead of cookie to avoid third-party cookie issues
+CSRF_USE_SESSIONS = os.getenv('CSRF_USE_SESSIONS', 'False') == 'True'
+
 # Application definition
 
 INSTALLED_APPS = [
