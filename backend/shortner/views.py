@@ -64,6 +64,7 @@ def get_client_ip(request):
 # -------------------------
 # Create short URL
 # -------------------------
+@csrf_exempt
 @require_http_methods(["POST"])
 @login_required
 def create_short_url(request):
@@ -200,6 +201,7 @@ def get_url_analytics(request, url_id):
 # -------------------------
 # Delete URL
 # -------------------------
+@csrf_exempt
 @require_http_methods(["DELETE"])
 @login_required
 def delete_url(request, url_id):
