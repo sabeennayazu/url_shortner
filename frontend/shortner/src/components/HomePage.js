@@ -8,10 +8,9 @@ import {
   FiLogOut,
   FiClock,
   FiLink2,
+  FiCopy,
+  FiDownload,
   FiCheck,
-  FiBarChart2,
-  FiTrash2,
-  FiQrCode
 } from 'react-icons/fi';
 
 export function HomePage() {
