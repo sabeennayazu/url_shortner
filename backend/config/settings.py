@@ -52,10 +52,13 @@ SHORT_URL_DOMAIN = os.getenv('SHORT_URL_DOMAIN', 'https://localhost:8000')
 # Session Settings
 SESSION_COOKIE_AGE = 1209600  # 2 weeks
 SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SAMESITE = 'Lax'
+# For cross-site deployment (frontend and backend on different domains)
+# Use 'None' in production, 'Lax' for local development
+SESSION_COOKIE_SAMESITE = os.getenv('SESSION_COOKIE_SAMESITE', 'Lax')
 
 # CSRF Settings
-CSRF_COOKIE_SAMESITE = 'Lax'
+# For cross-site deployment (frontend and backend on different domains)
+CSRF_COOKIE_SAMESITE = os.getenv('CSRF_COOKIE_SAMESITE', 'Lax')
 CSRF_COOKIE_HTTPONLY = False  # Allow JS to read CSRF cookie for protection
 
 # Application definition
