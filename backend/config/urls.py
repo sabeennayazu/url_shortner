@@ -12,6 +12,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('api/', include('shortner.urls')),
-    path('s/<str:short_code>/', redirect_short_url, name='redirect_short_url'),
+    path('s/<str:short_code>', redirect_short_url, name='redirect_short_url'),
 
 ]
