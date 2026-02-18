@@ -10,7 +10,7 @@ services:
       - key: DEBUG
         value: "False"
       - key: ALLOWED_HOSTS
-        value: "yourdomain.com,api.yourdomain.com,yourdomain-api.onrender.com"
+        value: "url-shortner-eta-dun.vercel.app,url-shortner-backend-cqgw.onrender.com"
       - key: SECURE_SSL_REDIRECT
         value: "True"
       - key: SESSION_COOKIE_SECURE
@@ -18,11 +18,11 @@ services:
       - key: CSRF_COOKIE_SECURE
         value: "True"
       - key: CORS_ALLOWED_ORIGINS
-        value: "https://yourdomain.com,https://www.yourdomain.com,https://yourdomain.vercel.app"
+        value: "https://url-shortner-eta-dun.vercel.app,https://url-shortner-backend-cqgw.onrender.com"
       - key: CSRF_TRUSTED_ORIGINS
-        value: "https://yourdomain.com,https://www.yourdomain.com,https://yourdomain.vercel.app"
+        value: "https://url-shortner-eta-dun.vercel.app,https://url-shortner-backend-cqgw.onrender.com"
       - key: SHORT_URL_DOMAIN
-        value: "https://yourdomain.com"
+        value: "https://url-shortner-eta-dun.vercel.app"
 
   - type: pserv
     name: url-shortener-db
